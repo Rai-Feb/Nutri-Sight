@@ -39,10 +39,16 @@ st.markdown(
 )
 
 # Tata Letak Header Komponen Utama
+# Tata Letak Header Komponen Utama
 col_logo, col_judul = st.columns([1, 4])
 with col_logo:
     try:
-        st.image("Nutri-Sight.png", width=110)
+        # st.image("Nutri-Sight.png", width=110) # <-- Hapus baris ini
+        # Ganti dengan CSS agar gambar tajam dan tidak pecah
+        st.markdown(
+            '<img src="Nutri-Sight.png" style="max-height: 80px; width: auto; image-rendering: -webkit-optimize-contrast;">',
+            unsafe_allow_html=True,
+        )
     except:
         st.caption("⚠️ File Nutri-Sight.png belum masuk folder root")
 with col_judul:
@@ -50,7 +56,6 @@ with col_judul:
     st.write(
         "Sistem Pemantauan Gizi & Deteksi Dini Stunting Terintegrasi Kementerian Kesehatan RI"
     )
-
 st.write("---")
 
 # Pengelompokan Form Menjadi Dua Kolom Sejajar
