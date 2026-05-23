@@ -1,7 +1,7 @@
 import streamlit as st
 import joblib
 import numpy as np
-import base64  # Ditambahkan untuk membaca gambar ke HTML
+import base64  
 from rag_logic import dapatkan_sapaan_awal, tanggapi_chat_lanjutan
 
 # Konfigurasi Jalur File Proyek
@@ -12,14 +12,12 @@ NAMA_MODEL_ML = "Nutri_RF.pkl"
 model_ml = joblib.load(NAMA_MODEL_ML)
 
 
-# Fungsi enkripsi gambar agar bisa dibaca oleh tag HTML Streamlit
+# Enkripsi Gambar
 def enkripsi_gambar_ke_base64(jalur_gambar):
     with open(jalur_gambar, "rb") as f:
         data_gambar = f.read()
     return base64.b64encode(data_gambar).decode()
 
-
-# Injeksi Tema Kemenkes RI (CSS)
 st.set_page_config(page_title="Nutri-Sight", layout="centered", page_icon="Nutri-Sight.png")
 
 st.markdown(
@@ -45,11 +43,10 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-# Tata Letak Header Komponen Utama
+# Layout Heder & Logo
 col_logo, col_judul = st.columns([1, 4])
 with col_logo:
     try:
-        # Mengubah file lokal menjadi string Base64 yang aman dibaca browser
         string_logo = enkripsi_gambar_ke_base64("Nutri-Sight.png")
         st.markdown(
             f'<img src="data:image/png;base64,{string_logo}" style="max-height: 85px; width: auto; image-rendering: -webkit-optimize-contrast;">',
@@ -64,7 +61,7 @@ with col_judul:
     )
 st.write("---")
 
-# Pengelompokan Form Menjadi Dua Kolom Sejajar
+# Form Input
 st.subheader("📋 Formulir Antropometri Balita")
 kolom_kiri, kolom_kanan = st.columns(2)
 
@@ -81,13 +78,13 @@ with kolom_kanan:
 
 jk_bin = 0 if jk == "Laki-laki" else 1
 
-# Manajemen Memori Percakapan
+# State Chatbot
 if "messages" not in st.session_state:
     st.session_state.messages = []
 if "status_deteksi" not in st.session_state:
     st.session_state.status_deteksi = None
 
-# Eksekusi Utama Analisis
+# Analisis
 if st.button("Mulai Analisis Gizi & Konsultasi AI"):
     data_pasien = np.array([[jk_bin, umur, tinggi, berat]])
     hasil_ml = model_ml.predict(data_pasien)
@@ -107,7 +104,7 @@ if st.button("Mulai Analisis Gizi & Konsultasi AI"):
         )
     st.session_state.messages = [{"role": "assistant", "content": jawaban_awal}]
 
-# Penanganan Output Diagnosis & Fitur Chatbox
+# Output & Fitur chatbot
 if st.session_state.status_deteksi:
     st.write("---")
     st.subheader("📊 Hasil Diagnosis & Rekomendasi Klinis")
