@@ -1,6 +1,7 @@
 import streamlit as st
 import joblib
 import numpy as np
+import base64  # Ditambahkan untuk membaca gambar ke HTML
 from rag_logic import dapatkan_sapaan_awal, tanggapi_chat_lanjutan
 
 # Konfigurasi Jalur File Proyek
@@ -10,10 +11,16 @@ NAMA_MODEL_ML = "Nutri_RF.pkl"
 
 model_ml = joblib.load(NAMA_MODEL_ML)
 
+
+# Fungsi enkripsi gambar agar bisa dibaca oleh tag HTML Streamlit
+def enkripsi_gambar_ke_base64(jalur_gambar):
+    with open(jalur_gambar, "rb") as f:
+        data_gambar = f.read()
+    return base64.b64encode(data_gambar).decode()
+
+
 # Injeksi Tema Kemenkes RI (CSS)
-st.set_page_config(
-    page_title="Nutri-Sight", layout="centered", page_icon=""
-)
+st.set_page_config(page_title="Nutri-Sight", layout="centered", page_icon="👶")
 
 st.markdown(
     """
@@ -39,14 +46,13 @@ st.markdown(
 )
 
 # Tata Letak Header Komponen Utama
-# Tata Letak Header Komponen Utama
 col_logo, col_judul = st.columns([1, 4])
 with col_logo:
     try:
-        # st.image("Nutri-Sight.png", width=110) # <-- Hapus baris ini
-        # Ganti dengan CSS agar gambar tajam dan tidak pecah
+        # Mengubah file lokal menjadi string Base64 yang aman dibaca browser
+        string_logo = enkripsi_gambar_ke_base64("Nutri-Sight.png")
         st.markdown(
-            '<img src="Nutri-Sight.png" style="max-height: 80px; width: auto; image-rendering: -webkit-optimize-contrast;">',
+            f'<img src="data:image/png;base64,{string_logo}" style="max-height: 85px; width: auto; image-rendering: -webkit-optimize-contrast;">',
             unsafe_allow_html=True,
         )
     except:
