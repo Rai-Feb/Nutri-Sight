@@ -20,7 +20,7 @@ def enkripsi_gambar_ke_base64(jalur_gambar):
 
 
 # Injeksi Tema Kemenkes RI (CSS)
-st.set_page_config(page_title="Nutri-Sight", layout="centered", page_icon="👶")
+st.set_page_config(page_title="Nutri-Sight", layout="centered", page_icon="Nutri-Sight.png")
 
 st.markdown(
     """
