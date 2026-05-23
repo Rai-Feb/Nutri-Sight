@@ -42,7 +42,7 @@ st.markdown(
 col_logo, col_judul = st.columns([1, 4])
 with col_logo:
     try:
-        st.image("Logo.Nutri-Sight.png", width=110)
+        st.image("Nutri-Sight.png", width=110)
     except:
         st.caption("⚠️ File Nutri-Sight.png belum masuk folder root")
 with col_judul:
