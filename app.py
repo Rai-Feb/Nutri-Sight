@@ -57,12 +57,12 @@ with col_logo:
 with col_judul:
     st.title("Nutri-Sight")
     st.write(
-        "Sistem Pemantauan Gizi & Deteksi Dini Stunting Terintegrasi Kementerian Kesehatan RI"
+        "Sistem Klasifikasi Stunting & Intervensi Berbasis Chatbot"
     )
 st.write("---")
 
 # Form Input
-st.subheader("📋 Formulir Antropometri Balita")
+st.subheader("Formulir Antropometri Balita")
 kolom_kiri, kolom_kanan = st.columns(2)
 
 with kolom_kiri:
@@ -126,7 +126,7 @@ if st.session_state.status_deteksi:
             st.write(user_input)
 
         with st.chat_message("assistant"):
-            with st.spinner("Dokter AI sedang memverifikasi rujukan buku panduan..."):
+            with st.spinner("Admin Nutri-Sight sedang memverifikasi Modul & Rujukan..."):
                 jawaban_lanjutan = tanggapi_chat_lanjutan(
                     GEMINI_API_KEY,
                     NAMA_FILE_PDF,
