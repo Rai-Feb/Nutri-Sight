@@ -2,7 +2,7 @@ import google.generativeai as genai
 from pypdf import PdfReader
 
 
-# Fungsi untuk membaca seluruh teks di dalam file PDF
+# Read File PDF
 def muat_dokumen_pdf(nama_file_pdf):
     try:
         reader = PdfReader(nama_file_pdf)
@@ -14,7 +14,7 @@ def muat_dokumen_pdf(nama_file_pdf):
         return f"Gagal membaca PDF: {e}. Menggunakan teks cadangan standar Kemenkes."
 
 
-# Fungsi untuk memicu jawaban pertama dari Dokter AI (setelah tombol diagnosis diklik)
+# Function Respons Awal Chatbot
 def dapatkan_sapaan_awal(api_key, nama_pdf, jk, umur, tinggi, berat, status_ml):
     genai.configure(api_key=api_key)
     dokumen_rujukan = muat_dokumen_pdf(nama_pdf)
@@ -35,7 +35,7 @@ def dapatkan_sapaan_awal(api_key, nama_pdf, jk, umur, tinggi, berat, status_ml):
     return response.text
 
 
-# Fungsi untuk melanjutkan percakapan di kolom chatbox (membawa riwayat obrolan)
+# Next Chat
 def tanggapi_chat_lanjutan(
     api_key, nama_pdf, status_ml, jk, umur, riwayat_chat, pertanyaan_baru
 ):
