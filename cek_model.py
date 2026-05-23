@@ -1,10 +1,6 @@
-import google.generativeai as genai
+import joblib
 
-# Masukkan API Key kamu yang valid di sini
-genai.configure(api_key="AIzaSyDpqrwhI4TMrhw0e941tgFAqqNSDEkk2OY")
+model_ml = joblib.load("Nutri_RF.pkl")
+print("Parameter Model:", model_ml.get_params())
 
-# Menampilkan semua model yang mendukung generate content
-print("=== DAFTAR MODEL GEMINI YANG TERSEDIA ===")
-for model in genai.list_models():
-    if "generateContent" in model.supported_generation_methods:
-        print(f"- {model.name}")
+print("Jumlah Pohon Keputusan:", len(model_ml.estimators_))
